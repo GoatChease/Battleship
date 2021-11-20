@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.target=DanielHunt
+comment1.params=arr
+comment1.target=boolean\ isActiveHit(char[][])
+comment10.params=guesses
+comment10.target=java.lang.String\ makeGuess(char[][])
+comment2.params=arr
+comment2.target=int[]\ max(int[][])
+comment3.params=arr
+comment3.target=boolean\ patrolSunk(char[][])
+comment4.params=arr
+comment4.target=boolean\ submarineSunk(char[][])
+comment5.params=arr
+comment5.target=boolean\ destroyerSunk(char[][])
+comment6.params=arr
+comment6.target=boolean\ battleship(char[][])
+comment7.params=arr
+comment7.target=boolean\ aircraftSunk(char[][])
+comment8.params=i
+comment8.target=boolean\ isValid(int)
+comment9.params=arr
+comment9.target=void\ printBoard(int[][])
+numComments=11

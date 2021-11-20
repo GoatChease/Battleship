@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=BattleShipTools
+comment1.params=array
+comment1.target=void\ shuffleArray(int[])
+comment2.params=gameBoard
+comment2.target=void\ randomBoard(int[][])
+comment3.params=gameBoard
+comment3.target=void\ problemBoard(int[][])
+comment4.params=gameBoard
+comment4.target=void\ printBoard(int[][])
+comment5.params=playerBoard
+comment5.target=void\ printBoard(char[][])
+comment6.params=guessMap\ guess\ gameBoard
+comment6.target=boolean\ updateGuess(char[][],\ java.lang.String,\ int[][])
+comment7.params=guess\ gameBoard
+comment7.target=int\ hit1miss0(java.lang.String,\ int[][])
+numComments=8
