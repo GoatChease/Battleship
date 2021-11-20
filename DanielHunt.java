@@ -1,21 +1,92 @@
 public class DanielHunt {
-    //Testing for active hit
-    public static boolean isActiveHit(char[][] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                if (arr[i][j] == 'X') {
-                    return true;
+    public static String makeGuess(char[][] guesses) {
+        int[][] heatmap = new int[10][10];
+        int[] coords = new int[2];
+        int row, col;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                //Patrol boat
+                if (isValid(i+1, j) && isOpen(i, j, guesses) && isOpen(i+1, j, guesses) && !patrolSunk(guesses)) {
+                    heatmap[i][j]++;
+                    heatmap[i+1][j]++;
+                }
+                if (isValid(i, j+1) && isOpen(i, j, guesses) && isOpen(i, j+1, guesses) && !patrolSunk(guesses)) {
+                    heatmap[i][j]++;
+                    heatmap[i][j+1]++;
+                }
+                //Submarine
+                if (isValid(i+2, j) && isOpen(i, j, guesses) && isOpen(i+2, j, guesses) && !submarineSunk(guesses)) {
+                    heatmap[i][j]++;
+                    heatmap[i+2][j]++;
+                }
+                if (isValid(i, j+2) && isOpen(i, j, guesses) && isOpen(i, j+2, guesses) && !submarineSunk(guesses)) {
+                    heatmap[i][j]++;
+                    heatmap[i][j+2]++;
+                }
+                //Destroyer ship
+                if (isValid(i+2, j) && isOpen(i, j, guesses) && isOpen(i+2, j, guesses) && !destroyerSunk(guesses)) {
+                    heatmap[i][j]++;
+                    heatmap[i+2][j]++;
+                }
+                if (isValid(i, j+2) && isOpen(i, j, guesses) && isOpen(i, j+2, guesses) && !destroyerSunk(guesses)) {
+                    heatmap[i][j]++;
+                    heatmap[i][j+2]++;
+                }
+                //Battleship
+                if (isValid(i+3, j) && isOpen(i, j, guesses) && isOpen(i+3, j, guesses) && !battleshipSunk(guesses)) {
+                    heatmap[i][j]++;
+                    heatmap[i+3][j]++;
+                }
+                if (isValid(i, j+3) && isOpen(i, j, guesses) && isOpen(i, j+3, guesses) && !battleshipSunk(guesses)) {
+                    heatmap[i][j]++;
+                    heatmap[i][j+3]++;
+                }
+                //Aircraft carrier
+                if (isValid(i+4, j) && isOpen(i, j, guesses) && isOpen(i+4, j, guesses) && !aircraftSunk(guesses)) {
+                    heatmap[i][j]++;
+                    heatmap[i+4][j]++;
+                }
+                if (isValid(i, j+4) && isOpen(i, j, guesses) && isOpen(i, j+4, guesses) && !aircraftSunk(guesses)) {
+                    heatmap[i][j]++;
+                    heatmap[i][j+4]++;
+                }
+                
+                if (guesses[i][j] == 'O') {
+                    heatmap[i][j] = 0;
+                }
+                //Up
+                if (guesses[i][j] == 'X' && isValid(i+1, j)) {
+                    heatmap[i+1][j] += 10;
+                }
+                //Right
+                if (guesses[i][j] == 'X' && isValid(i, j+1)) {
+                    heatmap[i][j+1] += 10;
+                }
+                //Down
+                if (guesses[i][j] == 'X' && isValid(i-1, j)) {
+                    heatmap[i-1][j] += 10;
+                }
+                //Left
+                if (guesses[i][j] == 'X' && isValid(i, j-1)) {
+                    heatmap[i][j-1] += 10;
                 }
             }
         }
-        return false;
+        coords = maxHeat(heatmap);
+        row = coords[0];
+        col = coords[1];
+        char a = (char)((int)'A' + row);
+        printBoard(heatmap);
+        String guess = a + Integer.toString(col+1);
+        return guess;
+        
     }
-    //Max heatmap method
-    public static int[] max(int[][] arr) {
-        int max = arr[0][0];
+    
+    public static int[] maxHeat(int[][] arr) {
         int[] maxCoords = new int[2];
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
+        int max = arr[0][0];
+        for (int i = 1; i < 10; i++) {
+            for (int j = 1; j < 10; j++) {
                 if (arr[i][j] > max) {
                     max = arr[i][j];
                     maxCoords[0] = i;
@@ -71,7 +142,7 @@ public class DanielHunt {
         return false;
     }
     //Testing if battleship is sunk
-    public static boolean battleship(char[][] arr) {
+    public static boolean battleshipSunk(char[][] arr) {
         int count = 0;
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
@@ -85,7 +156,7 @@ public class DanielHunt {
         }
         return false;
     }
-    //Testing if battleship is sunk
+    //Testing if aircraft carrier is sunk
     public static boolean aircraftSunk(char[][] arr) {
         int count = 0;
         for (int i = 0; i < arr.length; i++) {
@@ -100,18 +171,16 @@ public class DanielHunt {
         }
         return false;
     }
-    //Testing for validity
-    public static boolean isValid(int i) {
-        if (i < 10) {
-            return true;
-        } else {
-            return false;
-        }
+    //Validity check
+    public static boolean isValid(int i, int j) {
+        return i >= 0 && i < 10 && j >= 0 && j < 10;
+    }
+    public static boolean isOpen(int i, int j, char[][] arr) {
+        return arr[i][j] == '.' || arr[i][j] == 'X';
     }
     public static void printBoard(int[][] arr){
         char col = 'A';
-        System.out.println("           ENEMY");
-        System.out.println("    1   2   3   4   5   6");
+        System.out.println("__________________________________________________");
         for (int i = 0; i < arr.length; i++) {
             System.out.print(col + " ");
             for(int j = 0; j <arr[i].length; j++) {
@@ -120,38 +189,5 @@ public class DanielHunt {
             System.out.println("|");
             col++;
         }
-    }
-    //Guessing method
-    public static String makeGuess(char[][] guesses) {
-        int[][] heatMap = new int[10][10];
-        int row, col;
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (isValid(j+1)) {
-                    if (guesses[i][j] == '.' && guesses[i][j+1] == '.') {
-                        heatMap[i][j]++;
-                        heatMap[i][j+1]++;
-                    }
-                }
-                if (isValid(i+1)) {
-                    if (guesses[i][j] == '.' && guesses[i+1][j] == '.') {
-                        heatMap[i][j]++;
-                        heatMap[i+1][j]++;
-                    }
-                }
-            }
-        }
-        
-        while (isActiveHit(guesses) == true) {
-
-        }
-        printBoard(heatMap);
-        do{
-            row = (int)(Math.random() * 10);
-            col = (int)(Math.random() * 10);
-        }while(guesses[row][col] != '.');
-        char a = (char)((int)'A' + row); //Turning row into a char type
-        String guess = a + Integer.toString(col+1); //Combining row and col into a guess
-        return guess;
     }
 }

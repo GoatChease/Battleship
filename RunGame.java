@@ -2,7 +2,7 @@ import java.util.Arrays;
 public class RunGame{
     public static void main(String[] args){
         int sum = 0;
-        int games = 10000;
+        int games = 1;
         for(int i = 0; i < games; i++){
             sum += play();
         }
