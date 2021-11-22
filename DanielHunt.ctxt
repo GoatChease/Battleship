@@ -2,8 +2,6 @@
 comment0.target=DanielHunt
 comment1.params=guesses
 comment1.target=java.lang.String\ makeGuess(char[][])
-comment10.params=arr
-comment10.target=void\ printBoard(int[][])
 comment2.params=arr
 comment2.target=int[]\ maxHeat(int[][])
 comment3.params=arr
@@ -20,4 +18,4 @@ comment8.params=i\ j
 comment8.target=boolean\ isValid(int,\ int)
 comment9.params=i\ j\ arr
 comment9.target=boolean\ isOpen(int,\ int,\ char[][])
-numComments=11
+numComments=10
